@@ -17,7 +17,8 @@ const ModelSelector = ({ initialValue, onModelSelect }: ModelSelectorProps) => {
     <Select.Root
       collection={models}
       size="sm"
-      width="420px"
+      width="100%"
+      maxWidth="350px"
       className="model-selector"
       multiple={false}
       value={initialValue}
