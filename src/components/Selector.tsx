@@ -4,6 +4,8 @@ const models = createListCollection({
   items: [
     { label: "Car", value: "/car.glb" },
     { label: "Battery", value: "/car_battery.glb" },
+    { label: "Planet", value: "/planet.glb" },
+    { label: "Spaceship", value: "/spaceship.glb" },
   ],
 });
 
