@@ -4,8 +4,12 @@ import { useRef, useState } from "react";
 import { Group } from "three";
 import { GLTFResult } from "./Viewer";
 
-export const GLBLoader = () => {
-  const { nodes } = useGLTF("/car.glb") as GLTFResult;
+type GLBLoaderProps = {
+  modelPath: string;
+};
+
+export const GLBLoader = ({ modelPath }: GLBLoaderProps) => {
+  const { nodes } = useGLTF(modelPath) as GLTFResult;
 
   const group = useRef<Group>(null);
   const [hoveredPart, setHoveredPart] = useState<string | null>(null);
@@ -25,7 +29,8 @@ export const GLBLoader = () => {
           material={node.material}
           onPointerOver={() => setHoveredPart(name)}
           onPointerOut={() => setHoveredPart(null)}
-          material-color={hoveredPart === name ? "hotpink" : "white"} />
+          material-color={hoveredPart === name ? "hotpink" : "white"}
+        />
       ))}
     </group>
   );

@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Bounds, OrbitControls, useGLTF } from "@react-three/drei";
 import { Mesh, Material } from "three";
@@ -6,6 +6,7 @@ import LogCamera from "./LogCamera";
 import { GLBLoader } from "./GLBLoader";
 
 import "./Viewer.scss";
+import ModelSelector from "./components/Selector";
 
 export type GLTFResult = ReturnType<typeof useGLTF> & {
   nodes: Record<string, Mesh>;
@@ -13,6 +14,8 @@ export type GLTFResult = ReturnType<typeof useGLTF> & {
 };
 
 export default function Viewer() {
+  const [modelPaths, setModelPaths] = useState(["/car.glb"]);
+
   return (
     <div className="viewer-container">
       <Canvas camera={{ position: [2, 2, 2], fov: 45 }}>
@@ -20,12 +23,13 @@ export default function Viewer() {
         <directionalLight position={[5, 5, 5]} />
         <Suspense fallback={null}>
           <Bounds fit clip observe margin={2}>
-            <GLBLoader />
+            <GLBLoader modelPath={modelPaths[0]} />
           </Bounds>
           <OrbitControls />
           <LogCamera />
         </Suspense>
       </Canvas>
+      <ModelSelector initialValue={modelPaths} onModelSelect={setModelPaths} />
     </div>
   );
 }
