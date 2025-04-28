@@ -1,23 +1,20 @@
 import { Portal, Select, createListCollection } from "@chakra-ui/react";
 
-const models = createListCollection({
-  items: [
-    { label: "Car", value: "/car.glb" },
-    { label: "Battery", value: "/car_battery.glb" },
-    { label: "Planet", value: "/planet.glb" },
-    { label: "Spaceship", value: "/spaceship.glb" },
-  ],
-});
+export type SelectorOption = {
+  label?: string;
+  value: string;
+};
 
 type ModelSelectorProps = {
   initialValue?: string[];
+  options: SelectorOption[];
   onModelSelect: (modelPaths: string[]) => void;
 };
 
-const ModelSelector = ({ initialValue, onModelSelect }: ModelSelectorProps) => {
+const ModelSelector = ({ initialValue, options, onModelSelect }: ModelSelectorProps) => {
   return (
     <Select.Root
-      collection={models}
+      collection={createListCollection({ items: options })}
       size="sm"
       width="100%"
       maxWidth="350px"
@@ -37,9 +34,9 @@ const ModelSelector = ({ initialValue, onModelSelect }: ModelSelectorProps) => {
       <Portal>
         <Select.Positioner>
           <Select.Content>
-            {models.items.map((framework) => (
-              <Select.Item item={framework} key={framework.value}>
-                {framework.label}
+            {options.map((o) => (
+              <Select.Item item={o.value} key={o.value}>
+                {o.label ?? o.value}
                 <Select.ItemIndicator />
               </Select.Item>
             ))}
